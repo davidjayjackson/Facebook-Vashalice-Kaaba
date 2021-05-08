@@ -1,0 +1,175 @@
+---
+title: "Books"
+author: "David Jackson"
+date: "5/5/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(ggplot2)
+library(scales)
+```
+
+## Can Children of Different Races “See” Themselves in Audiobooks? A Comparison of U.S. Library Systems’ Offerings
+
+
+
+
+```{r}
+rm(list=ls())
+df <- readxl::read_xlsx("./AudioBookDataFinal.xlsx")
+df <- janitor::clean_names(df) # Use Janitor to clean col names
+
+```
+
+### ABSTRACT
+
+```{r}
+
+```
+
+### Introduction
+
+```{r}
+
+```
+
+### Literature review
+
+```{r}
+
+```
+
+### Method
+
+```{r}
+
+```
+
+#### Data source
+
+#### Search procedure
+
+#### Data analysis
+
+```{r}
+TAB <-table(df$author)
+TAB <- as.data.frame(TAB)
+top_five <- TAB %>% top_n(10)
+ggplot(top_five) + geom_col(aes(x=Var1,y=Freq)) + coord_flip()
+```
+```{r}
+count_race <-table(df$race)
+prop_race <- prop.table(count_race)
+prop_race_df <- as.data.frame(prop_race)
+ggplot(prop_race_df) + geom_col(aes(x=Var1,y=Freq))
+```
+
+#### Determining race and/or ethnicity of primary characters
+
+```{r}
+
+```
+
+#### Selecting comparison cities and library systems
+
+```{r}
+
+```
+
+#### Search procedure
+
+```{r}
+
+```
+
+#### Data analysis
+
+```{r}
+
+```
+
+### Results
+
+#### Market availability of audiobooks
+
+```{r}
+
+```
+
+#### Library availability of audiobooks featuring white, Black, Latino/a, and
+Asian/Pacific characters
+
+```{r}
+
+```
+
+#### Library availability of audiobooks featuring white characters versus
+characters of color
+
+
+```{r}
+
+```
+
+### Discussion
+
+```{r}
+
+```
+
+####  Market availability of audiobooks
+
+```{r}
+
+```
+
+#### Library availability of audiobooks
+
+```{r}
+
+```
+
+#### Comparing books featuring white characters/characters of color
+
+```{r}
+
+```
+
+### Limitations and recommendations for future research
+
+```{r}
+
+```
+
+#### Conclusion
+
+```{r}
+
+```
+
+
+#### Notes
+
+
+#### Acknowledgement
+
+#### Disclosure statement
+
+#### ORCID
+
+#### References
+
+#### Literature cited
+
+#### Appendix. Award-Winning Children’s Novels (1996-2018).
+
+
+
+
+
+
+
+
