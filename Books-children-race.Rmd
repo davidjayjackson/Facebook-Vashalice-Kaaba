@@ -2,19 +2,26 @@
 title: "Books"
 author: "David Jackson"
 date: "5/5/2021"
-output: pdf_document
+output: 
+  pdf_document: 
+    fig_width: 8
+    fig_height: 6
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
+library(tidyr)
 library(ggplot2)
 library(scales)
+library(dlookr)
 ```
 
 ## Can Children of Different Races “See” Themselves in Audiobooks? A Comparison of U.S. Library Systems’ Offerings
 
+* bulleted text
 
+Numbers $x2%$
 
 
 ```{r}
@@ -22,6 +29,26 @@ rm(list=ls())
 df <- readxl::read_xlsx("./AudioBookDataFinal.xlsx")
 df <- janitor::clean_names(df) # Use Janitor to clean col names
 
+```
+```{r}
+awards <- df %>% select()
+awards <- df %>% select(yr:author,newberry:aila)
+
+awards_count <- awards %>% group_by(author) %>% summarise(
+        across(newberry:aila,sum))
+
+awards_long <- awards_count %>% pivot_longer(cols = newberry:aila)
+```
+
+```{r}
+awards_count %>% filter(csk >=2) %>%
+  ggplot() + geom_col(aes(x=author,y=csk)) + coord_flip()
+```
+
+```{r}
+awards_long %>% filter(value >=3) %>%
+  ggplot() + geom_col(aes(x=name,y=value))  +
+  facet_wrap(~author,ncol = 3,scales ="free")
 ```
 
 ### ABSTRACT
@@ -55,6 +82,13 @@ df <- janitor::clean_names(df) # Use Janitor to clean col names
 #### Data analysis
 
 ```{r}
+YR <- table(df$yr)
+YR <- as.data.frame(YR)
+ggplot(YR) + geom_col(aes(x=Var1,y=Freq)) + coord_flip()
+yr_tibble <- tibble(YR)
+```
+
+```{r}
 TAB <-table(df$author)
 TAB <- as.data.frame(TAB)
 top_five <- TAB %>% top_n(10)
@@ -64,7 +98,8 @@ ggplot(top_five) + geom_col(aes(x=Var1,y=Freq)) + coord_flip()
 count_race <-table(df$race)
 prop_race <- prop.table(count_race)
 prop_race_df <- as.data.frame(prop_race)
-ggplot(prop_race_df) + geom_col(aes(x=Var1,y=Freq))
+ggplot(prop_race_df) + geom_col(aes(x=Var1,y=Freq)) + coord_flip() +
+  scale_y_continuous(labels = percent)
 ```
 
 #### Determining race and/or ethnicity of primary characters
