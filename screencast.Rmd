@@ -1,0 +1,54 @@
+---
+title: "Untitled"
+author: "David Jackson"
+date: "5/16/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(scales)
+library(dlookr)
+
+```
+
+## R Markdown
+
+```{r}
+rm(list=ls())
+df <- readxl::read_xlsx("./AudioBookDataFinal.xlsx")
+df <- janitor::clean_names(df) # Use Janitor to clean col names
+
+```
+```{r}
+## Bases R
+df$VAR1 <- ifelse(df$dig_ct_f =="YK","Y",df$dig_ct_f)
+df$VAR1 <- ifelse(df$dig_ct_f =="NK","N",df$dig_ct_f)
+##
+df$dig_ct_f<-substr(df$dig_ct_f,1,1)
+```
+
+### Tidyvese; How the cool kids do it.
+
+```{r}
+df <- df %>% mutate( VAR1 = if_else(dig_ct_f == "YK","Y",dig_ct_f),
+                     VAR1 = if_else(dig_ct_f == "NK","N",dig_ct_f))
+
+# Janita @ Slack
+
+df <-df %>% mutate(Var2 = case_when(
+VAR1 =="NK" ~ "N",
+VAR1 == "YK" ~ "Y",
+TRUE ~ VAR1))
+```
+
+### Pivot Longer
+
+```{r}
+pivot_a <- df %>% pivot_longer(cols=bkct_a:dig_ct_f)
+```
+
+
