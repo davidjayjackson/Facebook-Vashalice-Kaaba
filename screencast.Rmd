@@ -31,24 +31,71 @@ df$VAR1 <- ifelse(df$dig_ct_f =="NK","N",df$dig_ct_f)
 df$dig_ct_f<-substr(df$dig_ct_f,1,1)
 ```
 
-### Tidyvese; How the cool kids do it.
+### Count by Race
 
 ```{r}
-df <- df %>% mutate( VAR1 = if_else(dig_ct_f == "YK","Y",dig_ct_f),
-                     VAR1 = if_else(dig_ct_f == "NK","N",dig_ct_f))
-
-# Janita @ Slack
-
-df <-df %>% mutate(Var2 = case_when(
-VAR1 =="NK" ~ "N",
-VAR1 == "YK" ~ "Y",
-TRUE ~ VAR1))
+barplot(table(df$bkct_a),legend=T)
+barplot(prop.table(table(df$race))) 
 ```
+```{r}
+TAB <- table(df$race)
+TAB.df <- as.data.frame(TAB)
+ggplot(TAB.df) + geom_col(aes(x=reorder(Var1,Freq),y=Freq)) +
+  theme(axis.text.x = element_text(angle = 45))
+
+
+TAB.prop <- prop.table(TAB)
+TAB.prop <- as.data.frame(TAB.prop)
+ggplot(TAB.prop) + geom_col(aes(x=reorder(Var1,Freq),y=Freq)) +
+  theme(axis.text.x = element_text(angle = 45)) +
+  scale_y_continuous(labels = percent) + coord_flip() +
+  labs(title = "All Books: Percent of Total by Race",
+       y="Percent of Total",x="Race")
+```
+```{r}
+TAB.bkct_a <- df %>% filter(bkct_a =="Y") %>% select(bkct_a,race)
+bkct.tbl <- table(TAB.bkct_a$race)
+bkct.prop <- prop.table(bkct.tbl)
+
+bkct.ct <- as.data.frame(bkct.tbl)
+bkck.percent <- as.data.frame(bkct.prop)
+```
+```{r}
+ggplot(bkct.) + geom_col(aes(x=reorder(Var1,Freq),y=Freq)) +
+  theme(axis.text.x = element_text(angle = 45))ggplot(TAB.prop) + geom_col(aes(x=reorder(Var1,Freq),y=Freq)) +
+  theme(axis.text.x = element_text(angle = 45)) +
+  scale_y_continuous(labels = percent) + coord_flip() +
+  labs(title = "All Books: Percent of Total by Race",
+       y="Percent of Total",x="Race")
+
+
+```
+
+### Tidyverse; How the cool kids do it.
+
+```{r}
+summary(df$bkct_a)
+## Convert columns to factors: Brandon Hurr @ Slack
+df <-as_tibble(df) %>% mutate(across(race:aila, as.factor))
+summary(df$race)
+```
+
+
 
 ### Pivot Longer
 
 ```{r}
 pivot_a <- df %>% pivot_longer(cols=bkct_a:dig_ct_f)
+```
+
+### Percentage of Book form List by Branch
+
+```{r}
+pivot_a %>% filter(value =="Y") %>% count(name,race) %>%
+  ggplot() + geom_col(aes(x=race,y=n)) + facet_wrap(~name,ncol=3)
+```
+```{r}
+
 ```
 
 
