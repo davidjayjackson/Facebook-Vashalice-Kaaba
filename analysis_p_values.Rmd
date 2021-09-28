@@ -1,0 +1,209 @@
+---
+title: "Analysis of Selected Libraries"
+author: "David Jackson"
+date: "9/27/2021"
+output: 
+  html_document: 
+    fig_width: 9
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(scales)
+```
+
+## Analysis of Audio books by Race of Main Character
+
+```{r}
+rm(list=ls())
+df <- readxl::read_xlsx("./LibraOfficeAudioBookDataFinal.xlsx")
+df <- janitor::clean_names(df) # Use Janitor to clean col names
+#df$dig_ct_f <- ifelse(df$dig_ct_f =="YK","Y",df$dig_ct_f)
+#df$dig_ct_f <- ifelse(df$dig_ct_f =="NK","N",df$dig_ct_f)
+```
+
+### Branch Library: bkcta
+
+```{r}
+par(mfrow = c(1,2))
+bkcta <- table(df$race,df$bkcta)
+plot(bkcta)
+barplot(bkcta,legend=TRUE)
+chisq.test(bkcta,correct = TRUE)
+table(df$bkcta)
+
+```
+
+
+### Branch Library: cdcta
+
+```{r}
+par(mfrow = c(1,2))
+cdcta <- table(df$race,df$cdcta)
+plot(cdcta)
+barplot(cdcta,legend=TRUE)
+
+chisq.test(cdcta,correct = TRUE)
+```
+
+### Branch Library: dig_cta
+
+```{r}
+par(mfrow = c(1,2))
+dig_cta <- table(df$race,df$dig_cta)
+plot(dig_cta)
+barplot(dig_cta,legend=TRUE)
+chisq.test(dig_cta,correct = TRUE)
+
+```
+
+
+
+### Branch Library: bk_b
+
+```{r}
+par(mfrow = c(1,2))
+bk_b <- table(df$race,df$bk_b)
+plot(bk_b)
+barplot(bk_b,legend=TRUE)
+chisq.test(bk_b,correct = TRUE)
+```
+
+### Branch Library: cdctb
+
+```{r}
+par(mfrow = c(1,2))
+cdctb <- table(df$race,df$cdctb)
+plot(cdctb)
+barplot(cdctb,legend=TRUE)
+chisq.test(cdctb,correct = TRUE)
+```
+
+### Branch Library: dig_ctb
+
+```{r}
+par(mfrow = c(1,2))
+dig_ctb <- table(df$race,df$dig_ctb)
+plot(dig_ctb)
+barplot(dig_ctb,legend=TRUE)
+chisq.test(dig_ctb,correct = TRUE)
+```
+
+### Branch Library: bkctc
+
+```{r}
+par(mfrow = c(1,2))
+bkctc <- table(df$race,df$bkctc)
+plot(bkctc)
+barplot(bkctc,legend=TRUE)
+chisq.test(bkctc,correct = TRUE)
+```
+
+### Branch Library: cdctc
+
+```{r}
+par(mfrow = c(1,2))
+cdctc <- table(df$race,df$cdctc)
+plot(cdctc)
+barplot(cdctc,legend=TRUE)
+chisq.test(cdctc,correct = TRUE)
+
+```
+
+### Branch Library: dig_ctc
+
+```{r}
+par(mfrow = c(1,2))
+dig_ctc <- table(df$race,df$dig_ctc)
+plot(dig_ctc)
+barplot(dig_ctc,legend=TRUE)
+chisq.test(dig_ctc,correct = TRUE)
+
+```
+
+### Branch Library: bkctd
+
+```{r}
+par(mfrow = c(1,2))
+bkctd <- table(df$race,df$bkctd)
+plot(bkctd)
+barplot(bkctd,legend=TRUE)
+chisq.test(bkctd,correct = TRUE)
+
+```
+
+### Branch Library: cdctd
+
+```{r}
+par(mfrow = c(1,2))
+cdctd <- table(df$race,df$cdctd)
+plot(cdctd)
+barplot(cdctd,legend=TRUE)
+chisq.test(cdctd,correct = TRUE)
+```
+
+### Branch Library:dig_ctd
+
+```{r}
+par(mfrow = c(1,2))
+dig_ctd <- table(df$race,df$dig_ctd)
+plot(dig_ctd)
+barplot(dig_ctd,legend=TRUE)
+chisq.test(dig_ctd,correct = TRUE)
+```
+
+### Branch Library: cdcte
+
+```{r}
+par(mfrow = c(1,2))
+cdcte <- table(df$race,df$cdcte)
+plot(cdcte)
+barplot(cdcte,legend=TRUE)
+chisq.test(cdcte,correct = TRUE)
+```
+
+### Branch Library: dig_cte
+
+```{r}
+par(mfrow = c(1,2))
+dig_cte <- table(df$race,df$dig_cte)
+plot(dig_cte)
+barplot(dig_cte,legend=TRUE)
+chisq.test(dig_cte,correct = TRUE)
+```
+
+### Branch Library: bkctf
+
+```{r}
+par(mfrow = c(1,2))
+bkctf <- table(df$race,df$bkctf)
+plot(bkctf)
+barplot(bkctf,legend=TRUE)
+chisq.test(bkctf,correct = TRUE)
+```
+
+### Branch Library: cdctf
+
+```{r}
+par(mfrow = c(1,2))
+cdctf <- table(df$race,df$cdctf)
+plot(cdctf)
+barplot(cdctf,legend=TRUE)
+chisq.test(cdctf,correct = TRUE)
+```
+
+
+### Branch Library: dig_ctf
+
+```{r}
+par(mfrow = c(1,2))
+dig_ctf <- table(df$race,df$dig_ctf)
+plot(dig_ctf)
+barplot(dig_ctf,legend=TRUE)
+chisq.test(dig_ctf,correct = TRUE)
+
+```
+
+
+
