@@ -13,7 +13,55 @@ library(tidyverse)
 library(scales)
 ```
 
+### Hypothess:
+
+"A supposition or proposed explanation made on the basis of limited evidence as a starting point for further investigation."
+
+### What is the Null Hypothesis?
+
+" The null hypothesis states that there is no relationship between two population parameters, i.e., an independent variable and a dependent variable. If the hypothesis shows a relationship between the two parameters, the outcome could be due to an experimental or sampling error. However, if the null hypothesis returns false, there is a relationship in the measured phenomenon." (https://corporatefinanceinstitute.com/)
+
+### What is Our Null Hypothesis?
+
+That there is no relationship between race (of the main charactors) and
+the purchasing habits of sixteen selected library branches.
+
+### The p-value explained
+
+The p-value is a number, calculated from a statistical test, that describes how likely you are to have found a particular set of observations if the null hypothesis were true.
+
+P-values are used in hypothesis testing to help decide whether to reject the null hypothesis. The **smaller the p-value **, the more likely you are to **reject** the null hypothesis.
+
+```{r}
+branch_pvalues <- tibble::tribble(
+               ~Branch,          ~`P-value`,
+               "bkcta",             2.2e-16,
+               "cdctc",           5.294e-09,
+               "cdctb",           6.282e-09,
+               "bkctd",           1.296e-08,
+               "bkctc",           3.052e-08,
+               "cdctd",           1.586e-06,
+               "cdctf",           3.977e-05,
+               "cdcta",           0.0001024,
+               "bkcte",           0.0001135,
+             "dig_ctc",           0.0002242,
+             "dig_ctd",           0.0004499,
+               "cdcte",            0.001836,
+             "dig_cta",             0.00276,
+             "dig_cte",            0.008088,
+             "dig_ctf",             0.01091,
+  "Race is not factor",                0.04,
+               "bkctf",              0.0422,
+                "bk_b",             0.05248,
+             "dig_ctb",              0.5297
+  ) 
+flextable::flextable(branch_pvalues)
+
+```
+
 ## Analysis of Audio books by Race of Main Character
+
+
 
 ```{r}
 rm(list=ls())
