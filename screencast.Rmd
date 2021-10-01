@@ -2,7 +2,10 @@
 title: "Untitled"
 author: "David Jackson"
 date: "5/16/2021"
-output: pdf_document
+output: 
+  pdf_document: 
+    fig_width: 7
+    fig_height: 6
 ---
 
 ```{r setup, include=FALSE}
@@ -34,8 +37,9 @@ df$dig_ct_f<-substr(df$dig_ct_f,1,1)
 ### Count by Race
 
 ```{r}
-barplot(table(df$bkct_a),legend=T)
-barplot(prop.table(table(df$race))) 
+par(mfrow = c(1,2))
+barplot(table(df$race),legend=T)
+pie(prop.table(table(df$race)),legend=T) 
 ```
 ```{r}
 TAB <- table(df$race)
@@ -61,8 +65,10 @@ bkct.ct <- as.data.frame(bkct.tbl)
 bkck.percent <- as.data.frame(bkct.prop)
 ```
 ```{r}
-ggplot(bkct.) + geom_col(aes(x=reorder(Var1,Freq),y=Freq)) +
-  theme(axis.text.x = element_text(angle = 45))ggplot(TAB.prop) + geom_col(aes(x=reorder(Var1,Freq),y=Freq)) +
+ggplot(bkct.ct) + geom_col(aes(x=Var1,y=Freq)) +
+  theme(axis.text.x = element_text(angle = 45))
+
+ggplot(TAB.prop) + geom_col(aes(x=reorder(Var1,Freq),y=Freq)) +
   theme(axis.text.x = element_text(angle = 45)) +
   scale_y_continuous(labels = percent) + coord_flip() +
   labs(title = "All Books: Percent of Total by Race",
@@ -85,17 +91,17 @@ summary(df$race)
 ### Pivot Longer
 
 ```{r}
-pivot_a <- df %>% pivot_longer(cols=bkct_a:dig_ct_f)
+pivot_a <- df %>% pivot_longer(cols=bkct_a:dig_ct_f,names_to = "library")
 ```
 
 ### Percentage of Book form List by Branch
 
 ```{r}
-pivot_a %>% filter(value =="Y") %>% count(name,race) %>%
-  ggplot() + geom_col(aes(x=race,y=n)) + facet_wrap(~name,ncol=3)
+pivot_a %>% filter(value =="Y") %>% count(library,race) %>%
+  ggplot() + geom_col(aes(x=race,y=n)) + facet_wrap(~library,ncol=3) +
+  theme(axis.text.x = element_text(angle = 45))
 ```
 ```{r}
-
+df %>% 
 ```
-
 

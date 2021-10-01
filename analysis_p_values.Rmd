@@ -11,6 +11,9 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(scales)
+library(CGPfunctions)
+library(lsr)
+library(readODS)
 ```
 
 ### Hypothess:
@@ -55,7 +58,9 @@ branch_pvalues <- tibble::tribble(
                 "bk_b",             0.05248,
              "dig_ctb",              0.5297
   ) 
-flextable::flextable(branch_pvalues)
+
+branch_pvalues %>% 
+    flextable::flextable()
 
 ```
 
@@ -66,20 +71,86 @@ flextable::flextable(branch_pvalues)
 ```{r}
 rm(list=ls())
 df <- readxl::read_xlsx("./LibraOfficeAudioBookDataFinal.xlsx")
+# df <- read_ods("./AudioBookDataODS.ods")
 df <- janitor::clean_names(df) # Use Janitor to clean col names
-#df$dig_ct_f <- ifelse(df$dig_ct_f =="YK","Y",df$dig_ct_f)
-#df$dig_ct_f <- ifelse(df$dig_ct_f =="NK","N",df$dig_ct_f)
+df$dig_ctf<-substr(df$dig_ctf,1,1)
+df$dig_ctb<-substr(df$dig_ctb,1,1)
+df$dig_cta<-substr(df$dig_cta,1,1)
+df$dig_ctc<-substr(df$dig_ctc,1,1)
+df$dig_ctd<-substr(df$dig_ctd,1,1)
+df$dig_cte<-substr(df$dig_cte,1,1)
 ```
+
+## Branches Where Null Hypothesis wasn't rejected (P > 0.40)
+
+### Branch Library: bkctf
+
+```{r}
+
+# par(mfrow = c(1,2))
+bkctf <- table(df$race,df$bkctf)
+plot(bkctf)
+barplot(bkctf,legend=TRUE)
+chisq.test(bkctf,correct = TRUE)
+```
+```{r}
+bkctf <- as.data.frame(bkctf)
+ggplot(bkctf) + geom_col(aes(x=Var2,y=Freq,fill=Var1))
+
+```
+
+
+
+
+### Branch Library: bk_b
+
+```{r}
+# par(mfrow = c(1,2))
+bk_b <- table(df$race,df$bk_b)
+plot(bk_b)
+barplot(bk_b,legend=TRUE)
+chisq.test(bk_b,correct = TRUE)
+```
+
+```{r}
+bk_b <- as.data.frame(bk_b)
+ggplot(bk_b) + geom_col(aes(x=Var2,y=Freq,fill=Var1))
+
+```
+
+### Branch Library: dig_ctb
+
+```{r}
+# par(mfrow = c(1,2))
+dig_ctb <- table(df$race,df$dig_ctb)
+plot(dig_ctb)
+barplot(dig_ctb,legend=TRUE)
+chisq.test(dig_ctb,correct = TRUE)
+```
+```{r}
+dig_ctb <- as.data.frame(dig_ctb)
+ggplot(dig_ctb) + geom_col(aes(x=Var2,y=Freq,fill=Var1))
+
+```
+
+
+## Branches Where Null Hypothesis was Rejected (P < 0.04)
 
 ### Branch Library: bkcta
 
 ```{r}
-par(mfrow = c(1,2))
+# par(mfrow = c(1,2))
 bkcta <- table(df$race,df$bkcta)
 plot(bkcta)
 barplot(bkcta,legend=TRUE)
 chisq.test(bkcta,correct = TRUE)
 table(df$bkcta)
+
+```
+
+```{r}
+bkcta <- as.data.frame(bkcta)
+ggplot(bkcta) + geom_col(aes(x=Var2,y=Freq,fill=Var1))
 
 ```
 
@@ -108,15 +179,7 @@ chisq.test(dig_cta,correct = TRUE)
 
 
 
-### Branch Library: bk_b
 
-```{r}
-par(mfrow = c(1,2))
-bk_b <- table(df$race,df$bk_b)
-plot(bk_b)
-barplot(bk_b,legend=TRUE)
-chisq.test(bk_b,correct = TRUE)
-```
 
 ### Branch Library: cdctb
 
@@ -128,15 +191,7 @@ barplot(cdctb,legend=TRUE)
 chisq.test(cdctb,correct = TRUE)
 ```
 
-### Branch Library: dig_ctb
 
-```{r}
-par(mfrow = c(1,2))
-dig_ctb <- table(df$race,df$dig_ctb)
-plot(dig_ctb)
-barplot(dig_ctb,legend=TRUE)
-chisq.test(dig_ctb,correct = TRUE)
-```
 
 ### Branch Library: bkctc
 
@@ -221,15 +276,7 @@ barplot(dig_cte,legend=TRUE)
 chisq.test(dig_cte,correct = TRUE)
 ```
 
-### Branch Library: bkctf
 
-```{r}
-par(mfrow = c(1,2))
-bkctf <- table(df$race,df$bkctf)
-plot(bkctf)
-barplot(bkctf,legend=TRUE)
-chisq.test(bkctf,correct = TRUE)
-```
 
 ### Branch Library: cdctf
 
