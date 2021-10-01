@@ -2,10 +2,7 @@
 title: "Analysis of Selected Libraries"
 author: "David Jackson"
 date: "9/27/2021"
-output: 
-  html_document: 
-    fig_width: 8
-    fig_height: 4
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
