@@ -4,7 +4,8 @@ author: "David Jackson"
 date: "9/27/2021"
 output: 
   html_document: 
-    fig_width: 9
+    fig_width: 8
+    fig_height: 4
 ---
 
 ```{r setup, include=FALSE}
@@ -13,7 +14,7 @@ library(tidyverse)
 library(scales)
 library(CGPfunctions)
 library(lsr)
-library(readODS)
+library(ggpattern)
 ```
 
 ### Hypothess:
@@ -27,7 +28,7 @@ library(readODS)
 ### What is Our Null Hypothesis?
 
 That there is no relationship between race (of the main charactors) and
-the purchasing habits of sixteen selected library branches.
+the purchasing habits of eighteen selected library branches.
 
 ### The p-value explained
 
@@ -95,12 +96,13 @@ chisq.test(bkctf,correct = TRUE)
 ```
 ```{r}
 bkctf <- as.data.frame(bkctf)
-ggplot(bkctf) + geom_col(aes(x=Var2,y=Freq,fill=Var1))
+ggplot(bkctf,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL)
 
 ```
-
-
-
 
 ### Branch Library: bk_b
 
@@ -115,6 +117,15 @@ chisq.test(bk_b,correct = TRUE)
 ```{r}
 bk_b <- as.data.frame(bk_b)
 ggplot(bk_b) + geom_col(aes(x=Var2,y=Freq,fill=Var1))
+
+```
+```{r}
+bk_b <- as.data.frame(bk_b)
+ggplot(bk_b,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL)
 
 ```
 
@@ -133,6 +144,16 @@ ggplot(dig_ctb) + geom_col(aes(x=Var2,y=Freq,fill=Var1))
 
 ```
 
+```{r}
+dig_ctb <- as.data.frame(dig_ctb)
+ggplot(dig_ctb,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL)
+
+```
+
 
 ## Branches Where Null Hypothesis was Rejected (P < 0.04)
 
@@ -145,15 +166,24 @@ plot(bkcta)
 barplot(bkcta,legend=TRUE)
 chisq.test(bkcta,correct = TRUE)
 table(df$bkcta)
-
+bkcta <- as.data.frame(bkcta)
 ```
 
 ```{r}
-bkcta <- as.data.frame(bkcta)
+
 ggplot(bkcta) + geom_col(aes(x=Var2,y=Freq,fill=Var1))
 
 ```
 
+```{r}
+
+ggplot(bkcta,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL)
+
+```
 
 ### Branch Library: cdcta
 
@@ -162,8 +192,18 @@ par(mfrow = c(1,2))
 cdcta <- table(df$race,df$cdcta)
 plot(cdcta)
 barplot(cdcta,legend=TRUE)
-
 chisq.test(cdcta,correct = TRUE)
+cdcta <- as.data.frame(cdcta)
+```
+
+```{r}
+
+ggplot(cdcta,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL)
+
 ```
 
 ### Branch Library: dig_cta
@@ -175,11 +215,17 @@ plot(dig_cta)
 barplot(dig_cta,legend=TRUE)
 chisq.test(dig_cta,correct = TRUE)
 
+dig_cta <- as.data.frame(dig_cta)
 ```
+```{r}
 
+ggplot(dig_cta,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL)
 
-
-
+```
 
 ### Branch Library: cdctb
 
@@ -189,8 +235,17 @@ cdctb <- table(df$race,df$cdctb)
 plot(cdctb)
 barplot(cdctb,legend=TRUE)
 chisq.test(cdctb,correct = TRUE)
+cdctb <- as.data.frame(cdctb)
 ```
+```{r}
+ggplot(cdctb,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL) +
+  labs(x = "Race of Main Character")
 
+```
 
 
 ### Branch Library: bkctc
@@ -201,6 +256,16 @@ bkctc <- table(df$race,df$bkctc)
 plot(bkctc)
 barplot(bkctc,legend=TRUE)
 chisq.test(bkctc,correct = TRUE)
+bkctc <- as.data.frame(bkctc)
+```
+```{r}
+ggplot(bkctc,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL) +
+  labs(x = "Race of Main Character")
+
 ```
 
 ### Branch Library: cdctc
@@ -212,6 +277,16 @@ plot(cdctc)
 barplot(cdctc,legend=TRUE)
 chisq.test(cdctc,correct = TRUE)
 
+cdctc <- as.data.frame(cdctc)
+```
+```{r}
+ggplot(cdctc,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL) +
+  labs(x = "Race of Main Character")
+
 ```
 
 ### Branch Library: dig_ctc
@@ -222,6 +297,17 @@ dig_ctc <- table(df$race,df$dig_ctc)
 plot(dig_ctc)
 barplot(dig_ctc,legend=TRUE)
 chisq.test(dig_ctc,correct = TRUE)
+dig_ctc <- as.data.frame(dig_ctc)
+
+```
+
+```{r}
+ggplot(dig_ctc,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL) +
+  labs(x = "Race of Main Character")
 
 ```
 
@@ -233,6 +319,17 @@ bkctd <- table(df$race,df$bkctd)
 plot(bkctd)
 barplot(bkctd,legend=TRUE)
 chisq.test(bkctd,correct = TRUE)
+bkctd <- as.data.frame(bkctd)
+
+```
+
+```{r}
+ggplot(bkctd,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL) +
+  labs(x = "Race of Main Character")
 
 ```
 
@@ -244,6 +341,18 @@ cdctd <- table(df$race,df$cdctd)
 plot(cdctd)
 barplot(cdctd,legend=TRUE)
 chisq.test(cdctd,correct = TRUE)
+cdctd <- as.data.frame(cdctd)
+```
+
+
+```{r}
+ggplot(cdctd,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL) +
+  labs(x = "Race of Main Character")
+
 ```
 
 ### Branch Library:dig_ctd
@@ -254,6 +363,17 @@ dig_ctd <- table(df$race,df$dig_ctd)
 plot(dig_ctd)
 barplot(dig_ctd,legend=TRUE)
 chisq.test(dig_ctd,correct = TRUE)
+dig_ctd <- as.data.frame(dig_ctd)
+```
+
+```{r}
+ggplot(dig_ctd,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL) +
+  labs(x = "Race of Main Character")
+
 ```
 
 ### Branch Library: cdcte
@@ -264,8 +384,17 @@ cdcte <- table(df$race,df$cdcte)
 plot(cdcte)
 barplot(cdcte,legend=TRUE)
 chisq.test(cdcte,correct = TRUE)
+cdcte <- as.data.frame(cdcte)
 ```
+```{r}
+ggplot(cdcte,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL) +
+  labs(x = "Race of Main Character")
 
+```
 ### Branch Library: dig_cte
 
 ```{r}
@@ -274,8 +403,17 @@ dig_cte <- table(df$race,df$dig_cte)
 plot(dig_cte)
 barplot(dig_cte,legend=TRUE)
 chisq.test(dig_cte,correct = TRUE)
+dig_cte <- as.data.frame(dig_cte)
 ```
+```{r}
+ggplot(dig_cte,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL) +
+  labs(x = "Race of Main Character")
 
+```
 
 
 ### Branch Library: cdctf
@@ -286,8 +424,17 @@ cdctf <- table(df$race,df$cdctf)
 plot(cdctf)
 barplot(cdctf,legend=TRUE)
 chisq.test(cdctf,correct = TRUE)
+cdctf <- as.data.frame(cdctf)
 ```
+```{r}
+ggplot(cdctf,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL) +
+  labs(x = "Race of Main Character")
 
+```
 
 ### Branch Library: dig_ctf
 
@@ -298,7 +445,19 @@ plot(dig_ctf)
 barplot(dig_ctf,legend=TRUE)
 chisq.test(dig_ctf,correct = TRUE)
 
+dig_ctf <- as.data.frame(dig_ctf) 
+
 ```
 
+```{r}
+ggplot(dig_ctf,aes(x=reorder(Var1,Freq),y=Freq,pattern=Var1)) +
+  geom_bar_pattern(stat = "identity",
+                   pattern_color = "darkred",
+                   pattern_fill = "black") +
+  scale_x_discrete(labels = NULL, breaks = NULL) +
+  labs(x = "Race of Main Character")
 
+```
+
+#### (The End)
 
